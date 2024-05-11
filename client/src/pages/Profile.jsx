@@ -27,7 +27,15 @@ export default function Profile() {
       handleFileUpload(file);
     }
   }, [file]);
+  // این تابع handleFileUpload وظیفه آپلود یک فایل به ابر ذخیره‌سازی (مانند Firebase Storage) را دارد. بیایید به صورت ساده و کوتاه توضیح دهیم:
 
+  // ابتدا، با استفاده از getStorage(app) از شیوه‌ی ذخیره‌سازی مورد نظر (برای مثال Firebase Storage) یک نمونه از ذخیره‌سازی را دریافت می‌کنیم.
+  // سپس، با استفاده از new Date().getTime() و file.name یک نام فایل جدید برای آپلود تولید می‌کنیم.
+  // با استفاده از ref(storage, fileName) یک مسیر مخزن را برای ذخیره فایل جدید مشخص می‌کنیم.
+  // با استفاده از uploadBytesResumable(storageRef, file) یک تسک آپلود جدید ایجاد می‌شود که فایل مورد نظر را به مسیر مخزن مشخص شده آپلود می‌کند.
+  // با استفاده از uploadTask.on()، برای تعیین رویدادهای مربوط به تغییر وضعیت آپلود، یک لیسنر رویداد اضافه می‌شود. در اینجا، ما میزان پیشرفت آپلود را محاسبه کرده و آن را به عنوان پیشرفت فایل در state ذخیره می‌کنیم.
+  // در صورتی که آپلود با خطا مواجه شود، با فراخوانی تابع setError(true)، flag خطا را تنظیم می‌کنیم.
+  // در نهایت، وقتی آپلود با موفقیت انجام شد، با استفاده از getDownloadURL(uploadTask.snapshot.ref)، آدرس دانلود فایل آپلود شده را دریافت می‌کنیم و آن را به عنوان avatar در state مربوطه قرار می‌دهیم.
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
